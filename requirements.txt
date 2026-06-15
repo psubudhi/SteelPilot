@@ -15,3 +15,5 @@ python-dotenv
 pydantic
 plotly
 altair
+xgboost
+lightgbm
