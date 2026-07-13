@@ -11,7 +11,7 @@ from langchain_openai import OpenAIEmbeddings
 from .config import settings
 
 
-class VajraRAG:
+class SteelPilotRAG:
 
     def __init__(self, docs_dir: Path | None = None, vector_dir: Path | None = None):
         self.docs_dir = docs_dir or settings.docs_dir
@@ -42,7 +42,7 @@ class VajraRAG:
         self.vector_dir.mkdir(parents=True, exist_ok=True)
         self.vectorstore.save_local(str(self.vector_dir))
 
-    def load(self) -> "VajraRAG":
+    def load(self) -> "SteelPilotRAG":
         if not self.vector_dir.exists():
             raise RuntimeError(f"FAISS index not found at {self.vector_dir}. Run python scripts/ingest_faiss.py first.")
         self.vectorstore = FAISS.load_local(
@@ -62,15 +62,28 @@ class VajraRAG:
             assert self.vectorstore is not None
             results = self.vectorstore.similarity_search_with_score(query, k=k)
             out = []
+            seen: set[tuple[str, str]] = set()
             for doc, score in results:
                 src = doc.metadata.get("source", "unknown")
-                out.append({
+                item = {
                     "source": Path(src).name,
                     "score": float(score),
                     "content": doc.page_content.strip(),
                     "retrieval_mode": "faiss",
-                })
-            return out
+                }
+                key = (item["source"], item["content"][:240])
+                if key not in seen:
+                    seen.add(key)
+                    out.append(item)
+            for item in self.keyword_retrieve(query, k=k):
+                key = (item["source"], item["content"][:240])
+                if key in seen:
+                    continue
+                out.append(item)
+                seen.add(key)
+                if len(out) >= k:
+                    break
+            return out[:k]
         except Exception:
             return self.keyword_retrieve(query, k=k)
 
@@ -97,5 +110,5 @@ class VajraRAG:
         return scored[:k]
 
 
-SteelCareRAG = VajraRAG
-rag = VajraRAG()
+SteelCareRAG = SteelPilotRAG
+rag = SteelPilotRAG()

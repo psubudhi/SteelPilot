@@ -38,7 +38,7 @@ from src.agentic.rag import rag
 from src.agentic.rules import apply_physical_constraint_rules
 from src.agentic.runtime_store import runtime_store
 
-APP_NAME = "Vajra V2"
+APP_NAME = "Steel Pilot V2"
 
 st.set_page_config(page_title=f"{APP_NAME} — Maintenance Investigation Workspace", page_icon="⚡", layout="wide")
 
@@ -46,45 +46,45 @@ st.markdown(
     """
     <style>
     /* ------------------------------------------------------------------
-       Vajra V2 theme-safe styling v2.1
+       Steel Pilot V2 theme-safe styling v2.1
        Goal: every heading, card, caption, markdown block, expander title,
        chart container, and symbol remains readable in Streamlit light and
        dark mode. We avoid black-only text and use a calm blue accent for
        section headings and important labels.
     ------------------------------------------------------------------ */
     :root {
-        --vajra-card-bg: var(--secondary-background-color, #f8fafc);
-        --vajra-page-bg: var(--background-color, #ffffff);
-        --vajra-text: var(--text-color, #0f172a);
-        --vajra-muted: #64748b;
-        --vajra-heading: #1d4ed8;
-        --vajra-heading-soft: #2563eb;
-        --vajra-accent: #2563eb;
-        --vajra-accent-soft: rgba(37, 99, 235, 0.12);
-        --vajra-border: rgba(148, 163, 184, 0.45);
-        --vajra-shadow: rgba(15, 23, 42, 0.12);
-        --vajra-soft-blue: rgba(59, 130, 246, 0.11);
-        --vajra-soft-red: rgba(239, 68, 68, 0.12);
-        --vajra-soft-green: rgba(34, 197, 94, 0.12);
-        --vajra-soft-amber: rgba(245, 158, 11, 0.13);
+        --steel-pilot-card-bg: var(--secondary-background-color, #f8fafc);
+        --steel-pilot-page-bg: var(--background-color, #ffffff);
+        --steel-pilot-text: var(--text-color, #0f172a);
+        --steel-pilot-muted: #64748b;
+        --steel-pilot-heading: #1d4ed8;
+        --steel-pilot-heading-soft: #2563eb;
+        --steel-pilot-accent: #2563eb;
+        --steel-pilot-accent-soft: rgba(37, 99, 235, 0.12);
+        --steel-pilot-border: rgba(148, 163, 184, 0.45);
+        --steel-pilot-shadow: rgba(15, 23, 42, 0.12);
+        --steel-pilot-soft-blue: rgba(59, 130, 246, 0.11);
+        --steel-pilot-soft-red: rgba(239, 68, 68, 0.12);
+        --steel-pilot-soft-green: rgba(34, 197, 94, 0.12);
+        --steel-pilot-soft-amber: rgba(245, 158, 11, 0.13);
     }
 
     @media (prefers-color-scheme: dark) {
         :root {
-            --vajra-card-bg: #111827;
-            --vajra-page-bg: #0b1120;
-            --vajra-text: #e5e7eb;
-            --vajra-muted: #cbd5e1;
-            --vajra-heading: #60a5fa;
-            --vajra-heading-soft: #93c5fd;
-            --vajra-accent: #60a5fa;
-            --vajra-accent-soft: rgba(96, 165, 250, 0.16);
-            --vajra-border: rgba(148, 163, 184, 0.38);
-            --vajra-shadow: rgba(0, 0, 0, 0.35);
-            --vajra-soft-blue: rgba(59, 130, 246, 0.18);
-            --vajra-soft-red: rgba(248, 113, 113, 0.15);
-            --vajra-soft-green: rgba(74, 222, 128, 0.13);
-            --vajra-soft-amber: rgba(251, 191, 36, 0.16);
+            --steel-pilot-card-bg: #111827;
+            --steel-pilot-page-bg: #0b1120;
+            --steel-pilot-text: #e5e7eb;
+            --steel-pilot-muted: #cbd5e1;
+            --steel-pilot-heading: #60a5fa;
+            --steel-pilot-heading-soft: #93c5fd;
+            --steel-pilot-accent: #60a5fa;
+            --steel-pilot-accent-soft: rgba(96, 165, 250, 0.16);
+            --steel-pilot-border: rgba(148, 163, 184, 0.38);
+            --steel-pilot-shadow: rgba(0, 0, 0, 0.35);
+            --steel-pilot-soft-blue: rgba(59, 130, 246, 0.18);
+            --steel-pilot-soft-red: rgba(248, 113, 113, 0.15);
+            --steel-pilot-soft-green: rgba(74, 222, 128, 0.13);
+            --steel-pilot-soft-amber: rgba(251, 191, 36, 0.16);
         }
     }
 
@@ -103,7 +103,7 @@ st.markdown(
     .stApp div[data-testid="stExpander"] summary p,
     .stApp div[data-testid="stMetricLabel"] p,
     .stApp div[data-testid="stMetricValue"] {
-        color: var(--text-color, var(--vajra-text)) !important;
+        color: var(--text-color, var(--steel-pilot-text)) !important;
     }
 
     /* Headings use a blue accent that remains readable and visually coherent
@@ -116,7 +116,7 @@ st.markdown(
     .stApp div[data-testid="stMarkdownContainer"] h2,
     .stApp div[data-testid="stMarkdownContainer"] h3,
     .stApp div[data-testid="stMarkdownContainer"] h4 {
-        color: var(--vajra-heading) !important;
+        color: var(--steel-pilot-heading) !important;
         font-weight: 800 !important;
     }
 
@@ -124,12 +124,12 @@ st.markdown(
     .stApp h6,
     .stApp div[data-testid="stMarkdownContainer"] h5,
     .stApp div[data-testid="stMarkdownContainer"] h6 {
-        color: var(--vajra-heading-soft) !important;
+        color: var(--steel-pilot-heading-soft) !important;
         font-weight: 750 !important;
     }
 
     .main-title {
-        color: var(--vajra-heading) !important;
+        color: var(--steel-pilot-heading) !important;
         font-size: 2.0rem;
         font-weight: 850;
         margin-bottom: 0.1rem;
@@ -137,7 +137,7 @@ st.markdown(
     }
     .subtitle,
     .small-muted {
-        color: var(--vajra-muted) !important;
+        color: var(--steel-pilot-muted) !important;
         opacity: 0.95;
     }
     .subtitle {margin-bottom: 1rem;}
@@ -145,19 +145,19 @@ st.markdown(
 
     /* Streamlit expanders, tabs, captions and code blocks */
     .stApp div[data-testid="stExpander"] {
-        border-color: var(--vajra-border) !important;
+        border-color: var(--steel-pilot-border) !important;
     }
     .stApp div[data-testid="stExpander"] summary {
-        color: var(--vajra-heading-soft) !important;
+        color: var(--steel-pilot-heading-soft) !important;
         font-weight: 700 !important;
     }
     .stApp div[data-testid="stTabs"] button p {
-        color: var(--vajra-heading-soft) !important;
+        color: var(--steel-pilot-heading-soft) !important;
         font-weight: 700 !important;
     }
     .stApp code,
     .stApp pre {
-        color: var(--vajra-text) !important;
+        color: var(--steel-pilot-text) !important;
     }
 
     /* Theme-safe cards used across Plant Command Center, RCA, Copilot, and Evidence sections */
@@ -166,11 +166,11 @@ st.markdown(
     .alarm-box,
     .ok-box,
     .evidence-step {
-        background: var(--vajra-card-bg) !important;
-        color: var(--vajra-text) !important;
-        border: 1px solid var(--vajra-border) !important;
+        background: var(--steel-pilot-card-bg) !important;
+        color: var(--steel-pilot-text) !important;
+        border: 1px solid var(--steel-pilot-border) !important;
         border-radius: 16px;
-        box-shadow: 0 1px 8px var(--vajra-shadow);
+        box-shadow: 0 1px 8px var(--steel-pilot-shadow);
     }
     .card *,
     .stand-card *,
@@ -185,14 +185,14 @@ st.markdown(
     .ok-box b,
     .evidence-step b,
     .stand-title {
-        color: var(--vajra-heading-soft) !important;
+        color: var(--steel-pilot-heading-soft) !important;
     }
     .card .small-muted,
     .stand-card .small-muted,
     .alarm-box .small-muted,
     .ok-box .small-muted,
     .evidence-step .small-muted {
-        color: var(--vajra-muted) !important;
+        color: var(--steel-pilot-muted) !important;
         opacity: 0.95;
     }
 
@@ -222,23 +222,23 @@ st.markdown(
         border-left: 8px solid #ef4444 !important;
         padding: 12px;
         border-radius: 12px;
-        background: linear-gradient(0deg, var(--vajra-soft-red), var(--vajra-soft-red)), var(--vajra-card-bg) !important;
+        background: linear-gradient(0deg, var(--steel-pilot-soft-red), var(--steel-pilot-soft-red)), var(--steel-pilot-card-bg) !important;
     }
     .ok-box {
         border-color: rgba(34, 197, 94, 0.62) !important;
         border-left: 8px solid #22c55e !important;
         padding: 12px;
         border-radius: 12px;
-        background: linear-gradient(0deg, var(--vajra-soft-green), var(--vajra-soft-green)), var(--vajra-card-bg) !important;
+        background: linear-gradient(0deg, var(--steel-pilot-soft-green), var(--steel-pilot-soft-green)), var(--steel-pilot-card-bg) !important;
     }
 
     /* Decision evidence and rule cards */
     .evidence-step {
-        border-left: 4px solid var(--vajra-accent) !important;
+        border-left: 4px solid var(--steel-pilot-accent) !important;
         padding: 10px 14px;
         margin-bottom: 10px;
         border-radius: 10px;
-        background: linear-gradient(0deg, var(--vajra-soft-blue), var(--vajra-soft-blue)), var(--vajra-card-bg) !important;
+        background: linear-gradient(0deg, var(--steel-pilot-soft-blue), var(--steel-pilot-soft-blue)), var(--steel-pilot-card-bg) !important;
     }
     .rule-triggered {border-left: 6px solid #ef4444 !important;}
     .rule-muted {
@@ -250,17 +250,17 @@ st.markdown(
     .stApp div[data-testid="stMetric"] label,
     .stApp div[data-testid="stMetric"] p,
     .stApp div[data-testid="stMetric"] div {
-        color: var(--text-color, var(--vajra-text)) !important;
+        color: var(--text-color, var(--steel-pilot-text)) !important;
     }
     .stApp div[data-testid="stMetric"] [data-testid="stMetricValue"] {
-        color: var(--vajra-heading-soft) !important;
+        color: var(--steel-pilot-heading-soft) !important;
         font-weight: 800 !important;
     }
 
     /* Markdown links and important blue highlights */
     .stApp a,
     .stApp div[data-testid="stMarkdownContainer"] a {
-        color: var(--vajra-heading-soft) !important;
+        color: var(--steel-pilot-heading-soft) !important;
         font-weight: 700;
     }
     </style>
@@ -419,6 +419,17 @@ def render_decision_evidence(result: dict[str, Any] | None) -> None:
             st.json(step.get("evidence", {}))
 
 
+def build_conversation_context(messages: list[dict[str, str]], limit: int = 6) -> str:
+    recent = messages[-limit:]
+    lines = []
+    for msg in recent:
+        role = msg.get("role", "user").strip().lower()
+        content = str(msg.get("content", "")).strip()
+        if content:
+            lines.append(f"{role}: {content}")
+    return "\n".join(lines)
+
+
 def render_line_chart(df: pd.DataFrame, y_cols: list[str], title: str, active_ts: int | None = None) -> None:
     y_cols = [c for c in y_cols if c in df.columns]
     if df.empty or not y_cols:
@@ -461,14 +472,14 @@ def fault_label_to_title(fault: str) -> str:
 
 # ----------------------------- sidebar -----------------------------
 with st.sidebar:
-    st.header("Vajra V2 Navigation")
+    st.header("Steel Pilot V2 Navigation")
     page = st.radio(
         "Page",
         [
             "Plant Command Center",
             "Alarm Investigation & RCA",
             "Live Telemetry Replay",
-            "Vajra Maintenance Copilot",
+            "Steel Pilot Maintenance Copilot",
             "Operations Logbook & Feedback",
             "Model Health & Evaluation",
         ],
@@ -507,7 +518,7 @@ with st.sidebar:
             st.rerun()
     else:
         st.info("None bound")
-    thread_id = st.text_input("LangGraph Thread ID", value="vajra-v2-demo")
+    thread_id = st.text_input("LangGraph Thread ID", value="steel-pilot-v2-demo")
 
 
 # ----------------------------- pages -----------------------------
@@ -569,7 +580,7 @@ if page == "Plant Command Center":
             st.success(f"Saved {ev['log_id']}")
         if b3.button("Run quick RCA"):
             bind_alarm(row_idx, alarm_id)
-            with st.spinner("Running Vajra RCA..."):
+            with st.spinner("Running Steel Pilot RCA..."):
                 st.session_state.last_agent_result = answer_maintenance_query("Diagnose the selected priority alarm and recommend the next action.", thread_id=thread_id, row_index=row_idx, answer_mode="concise")
             st.success("RCA complete. Open Alarm Investigation or Copilot for details.")
 
@@ -690,16 +701,19 @@ elif page == "Live Telemetry Replay":
         raw = ml_service.telemetry_window(row_index=int(row_idx), stand=int(stand_sel), window=int(window))
         st.dataframe(raw.tail(50), use_container_width=True, hide_index=True)
 
-elif page == "Vajra Maintenance Copilot":
-    st.subheader("Vajra Maintenance Copilot")
+elif page == "Steel Pilot Maintenance Copilot":
+    st.subheader("Steel Pilot Maintenance Copilot")
     render_active_context()
-    st.caption("Use concise mode for exact operational answers and detailed mode for RCA/report-style responses. Out-of-domain queries are handled by a guardrail.")
+    st.caption("Ask naturally in follow-up style. Concise mode gives short chat answers, while Detailed mode gives a slightly deeper explanation without turning every reply into a full RCA report.")
     st.session_state.answer_mode = st.radio("Answer Mode", ["Concise", "Detailed"], horizontal=True, index=0 if st.session_state.answer_mode == "Concise" else 1)
     override = st.number_input("Optional row/timestamp override", value=-1, step=1)
     selected_row = int(override) if override >= 0 else st.session_state.active_alarm_row
     prompt_examples = [
         "Diagnose the active alarm and recommend next action.",
+        "Why do you think this is happening on this stand?",
+        "What should the operator inspect first if we want to avoid a cascade?",
         "Is this more likely mechanical or electrical?",
+        "Which procedure or checklist applies before the next shift handover?",
         "What telemetry evidence supports this diagnosis?",
         "Which SOP supports the recommended action?",
         "Can this issue cascade to nearby stands?",
@@ -711,14 +725,22 @@ elif page == "Vajra Maintenance Copilot":
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
-    user_query = st.chat_input("Ask Vajra about alarms, telemetry, RCA, SOPs, drift, priority, or feedback...")
+    user_query = st.chat_input("Ask about the rolling-mill problem, the active alarm, telemetry, RCA, or the relevant SOP/procedure...")
     if user_query:
         st.session_state.messages.append({"role": "user", "content": user_query})
         with st.chat_message("user"):
             st.markdown(user_query)
         with st.chat_message("assistant"):
-            with st.spinner("Running Vajra agents..."):
-                result = answer_maintenance_query(user_query, thread_id=thread_id, row_index=selected_row, answer_mode=st.session_state.answer_mode.lower())
+            with st.spinner("Running Steel Pilot agents..."):
+                conversation_context = build_conversation_context(st.session_state.messages)
+                result = answer_maintenance_query(
+                    user_query,
+                    thread_id=thread_id,
+                    row_index=selected_row,
+                    answer_mode=st.session_state.answer_mode.lower(),
+                    surface="copilot",
+                    conversation_context=conversation_context,
+                )
                 st.session_state.last_agent_result = result
                 answer = result.get("final_answer", "No answer generated.")
                 st.markdown(answer)

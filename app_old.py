@@ -21,7 +21,7 @@ from src.agentic.rag import rag
 from src.agentic.rules import apply_physical_constraint_rules
 from src.agentic.runtime_store import runtime_store
 
-APP_NAME = "Vajra V2"
+APP_NAME = "Steel Pilot V2"
 
 st.set_page_config(page_title=f"{APP_NAME} — Maintenance Investigation Workspace", page_icon="⚡", layout="wide")
 
@@ -224,14 +224,14 @@ def fault_label_to_title(fault: str) -> str:
 
 # ----------------------------- sidebar -----------------------------
 with st.sidebar:
-    st.header("Vajra V2 Navigation")
+    st.header("Steel Pilot V2 Navigation")
     page = st.radio(
         "Page",
         [
             "Plant Command Center",
             "Alarm Investigation & RCA",
             "Live Telemetry Replay",
-            "Vajra Maintenance Copilot",
+            "Steel Pilot Maintenance Copilot",
             "Operations Logbook & Feedback",
             "Model Health & Evaluation",
         ],
@@ -270,7 +270,7 @@ with st.sidebar:
             st.rerun()
     else:
         st.info("None bound")
-    thread_id = st.text_input("LangGraph Thread ID", value="vajra-v2-demo")
+    thread_id = st.text_input("LangGraph Thread ID", value="steel-pilot-v2-demo")
 
 
 # ----------------------------- pages -----------------------------
@@ -332,7 +332,7 @@ if page == "Plant Command Center":
             st.success(f"Saved {ev['log_id']}")
         if b3.button("Run quick RCA"):
             bind_alarm(row_idx, alarm_id)
-            with st.spinner("Running Vajra RCA..."):
+            with st.spinner("Running Steel Pilot RCA..."):
                 st.session_state.last_agent_result = answer_maintenance_query("Diagnose the selected priority alarm and recommend the next action.", thread_id=thread_id, row_index=row_idx, answer_mode="concise")
             st.success("RCA complete. Open Alarm Investigation or Copilot for details.")
 
@@ -453,8 +453,8 @@ elif page == "Live Telemetry Replay":
         raw = ml_service.telemetry_window(row_index=int(row_idx), stand=int(stand_sel), window=int(window))
         st.dataframe(raw.tail(50), use_container_width=True, hide_index=True)
 
-elif page == "Vajra Maintenance Copilot":
-    st.subheader("Vajra Maintenance Copilot")
+elif page == "Steel Pilot Maintenance Copilot":
+    st.subheader("Steel Pilot Maintenance Copilot")
     render_active_context()
     st.caption("Use concise mode for exact operational answers and detailed mode for RCA/report-style responses. Out-of-domain queries are handled by a guardrail.")
     st.session_state.answer_mode = st.radio("Answer Mode", ["Concise", "Detailed"], horizontal=True, index=0 if st.session_state.answer_mode == "Concise" else 1)
@@ -474,13 +474,13 @@ elif page == "Vajra Maintenance Copilot":
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
-    user_query = st.chat_input("Ask Vajra about alarms, telemetry, RCA, SOPs, drift, priority, or feedback...")
+    user_query = st.chat_input("Ask Steel Pilot about alarms, telemetry, RCA, SOPs, drift, priority, or feedback...")
     if user_query:
         st.session_state.messages.append({"role": "user", "content": user_query})
         with st.chat_message("user"):
             st.markdown(user_query)
         with st.chat_message("assistant"):
-            with st.spinner("Running Vajra agents..."):
+            with st.spinner("Running Steel Pilot agents..."):
                 result = answer_maintenance_query(user_query, thread_id=thread_id, row_index=selected_row, answer_mode=st.session_state.answer_mode.lower())
                 st.session_state.last_agent_result = result
                 answer = result.get("final_answer", "No answer generated.")

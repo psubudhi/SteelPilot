@@ -78,7 +78,7 @@ def _int_or_none(value: Any) -> int | None:
         return None
 
 
-class VajraRuntimeStore:
+class SteelPilotRuntimeStore:
 
     def __init__(self, db_path: Path | None = None):
         self.db_path = db_path or settings.sqlite_db_path
@@ -164,7 +164,7 @@ class VajraRuntimeStore:
         cascading = event.get("cascading_impact", {})
         rag_sources = event.get("rag_sources", event.get("rag_context", []))
         row_index = _int_or_none(event.get("row_index"))
-        recommended_action = event.get("recommended_action") or event.get("action") or "Review Vajra recommendation."
+        recommended_action = event.get("recommended_action") or event.get("action") or "Review Steel Pilot recommendation."
         record = {
             "log_id": _text_or_none(log_id) or f"LOG-{uuid.uuid4().hex[:10].upper()}",
             "created_at": _text_or_none(event.get("created_at") or now),
@@ -393,4 +393,4 @@ class VajraRuntimeStore:
         return df
 
 
-runtime_store = VajraRuntimeStore()
+runtime_store = SteelPilotRuntimeStore()

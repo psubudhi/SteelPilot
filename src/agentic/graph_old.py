@@ -21,7 +21,7 @@ from .spares import get_spares_for_fault
 
 
 DOMAIN_TERMS = {
-    "steel", "mill", "rolling", "roll", "stand", "tcm", "vajra", "scada", "telemetry",
+    "steel", "mill", "rolling", "roll", "stand", "tcm", "steelpilot", "steel-pilot", "scada", "telemetry",
     "anomaly", "alarm", "fault", "bearing", "motor", "electric", "workroll", "work-roll",
     "reduction", "gap", "torque", "force", "power", "tension", "speed", "rul", "risk",
     "health", "maintenance", "sop", "rca", "root", "cause", "drift", "logbook", "feedback",
@@ -128,7 +128,7 @@ def route_after_router(state: AgentState) -> Literal["feedback", "guardrail", "s
 
 def guardrail_node(state: AgentState) -> AgentState:
     answer = (
-        "I’m designed for Vajra steel plant maintenance workflows: telemetry, alarms, RCA, physical rules, "
+        "I’m designed for Steel Pilot steel plant maintenance workflows: telemetry, alarms, RCA, physical rules, "
         "SOP guidance, risk, proxy RUL, drift, feedback, and dashboard usage. Please ask a question related "
         "to the active alarm, plant health, maintenance action, model output, or steel rolling-mill process."
     )
@@ -278,7 +278,7 @@ def _deterministic_report(state: AgentState) -> str:
     rules = [r for r in state.get("physical_rules", []) if r.get("matched")]
     rag_docs = state.get("rag_context", [])
     mode = state.get("answer_mode", "concise")
-    action = "Review Vajra recommendation."
+    action = "Review Steel Pilot recommendation."
     if isinstance(plan, dict):
         ia = plan.get("immediate_actions", [])
         if isinstance(ia, list) and ia:
@@ -320,7 +320,7 @@ def report_node(state: AgentState) -> AgentState:
         "generated_at": datetime.now(timezone.utc).isoformat(),
     }, indent=2)
     final = invoke_text(REPORT_SYSTEM, user, temperature=0.15)
-    if final.startswith("Vajra could not call"):
+    if final.startswith("Steel Pilot could not call"):
         final = _deterministic_report(state)
     return {**state, "final_answer": final}
 
@@ -329,7 +329,7 @@ def audit_node(state: AgentState) -> AgentState:
     ml = state.get("ml_result", {})
     plan = state.get("maintenance_plan", {}) or {}
     immediate = plan.get("immediate_actions", []) if isinstance(plan, dict) else []
-    first_action = immediate[0] if isinstance(immediate, list) and immediate else "Review Vajra recommendation."
+    first_action = immediate[0] if isinstance(immediate, list) and immediate else "Review Steel Pilot recommendation."
     audit = digital_logbook.save_event({
         "query": state.get("query"),
         "final_answer": state.get("final_answer"),
@@ -390,7 +390,7 @@ app_graph = build_graph()
 
 def answer_maintenance_query(
     query: str,
-    thread_id: str = "vajra-demo",
+    thread_id: str = "steel-pilot-demo",
     row_index: int | None = None,
     answer_mode: str = "concise",
 ) -> dict[str, Any]:

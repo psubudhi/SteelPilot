@@ -1,5 +1,5 @@
-from src.agentic.rag import VajraRAG
+from src.agentic.rag import SteelPilotRAG
 
 if __name__ == "__main__":
-    VajraRAG().build()
-    print("Vajra FAISS knowledge base created.")
+    SteelPilotRAG().build()
+    print("Steel Pilot FAISS knowledge base created.")

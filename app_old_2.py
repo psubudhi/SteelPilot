@@ -21,7 +21,7 @@ from src.agentic.rag import rag
 from src.agentic.rules import apply_physical_constraint_rules
 from src.agentic.runtime_store import runtime_store
 
-APP_NAME = "Vajra V2"
+APP_NAME = "Steel Pilot V2"
 
 st.set_page_config(page_title=f"{APP_NAME} — Maintenance Investigation Workspace", page_icon="⚡", layout="wide")
 
@@ -29,33 +29,33 @@ st.markdown(
     """
     <style>
     /* ------------------------------------------------------------------
-       Vajra V2 theme-safe styling
+       Steel Pilot V2 theme-safe styling
        Streamlit dark mode changes the default text color, but custom HTML
        cards do not automatically receive good foreground/background pairs.
        These variables use Streamlit theme variables when available so the
        same cards remain readable in both light and dark themes.
     ------------------------------------------------------------------ */
     :root {
-        --vajra-card-bg: var(--secondary-background-color, #ffffff);
-        --vajra-page-bg: var(--background-color, #ffffff);
-        --vajra-text: var(--text-color, #0f172a);
-        --vajra-muted: var(--text-color, #475569);
-        --vajra-border: rgba(148, 163, 184, 0.42);
-        --vajra-shadow: rgba(15, 23, 42, 0.10);
-        --vajra-soft-blue: rgba(99, 102, 241, 0.10);
-        --vajra-soft-red: rgba(239, 68, 68, 0.10);
-        --vajra-soft-green: rgba(34, 197, 94, 0.10);
+        --steel-pilot-card-bg: var(--secondary-background-color, #ffffff);
+        --steel-pilot-page-bg: var(--background-color, #ffffff);
+        --steel-pilot-text: var(--text-color, #0f172a);
+        --steel-pilot-muted: var(--text-color, #475569);
+        --steel-pilot-border: rgba(148, 163, 184, 0.42);
+        --steel-pilot-shadow: rgba(15, 23, 42, 0.10);
+        --steel-pilot-soft-blue: rgba(99, 102, 241, 0.10);
+        --steel-pilot-soft-red: rgba(239, 68, 68, 0.10);
+        --steel-pilot-soft-green: rgba(34, 197, 94, 0.10);
     }
 
     /* Universal text helpers */
     .main-title {
-        color: var(--vajra-text) !important;
+        color: var(--steel-pilot-text) !important;
         font-size: 2.0rem;
         font-weight: 850;
         margin-bottom: 0.1rem;
     }
     .subtitle, .small-muted {
-        color: var(--vajra-muted) !important;
+        color: var(--steel-pilot-muted) !important;
         opacity: 0.78;
     }
     .subtitle {margin-bottom: 1rem;}
@@ -67,11 +67,11 @@ st.markdown(
     .alarm-box,
     .ok-box,
     .evidence-step {
-        background: var(--vajra-card-bg) !important;
-        color: var(--vajra-text) !important;
-        border: 1px solid var(--vajra-border) !important;
+        background: var(--steel-pilot-card-bg) !important;
+        color: var(--steel-pilot-text) !important;
+        border: 1px solid var(--steel-pilot-border) !important;
         border-radius: 16px;
-        box-shadow: 0 1px 8px var(--vajra-shadow);
+        box-shadow: 0 1px 8px var(--steel-pilot-shadow);
     }
     .card *,
     .stand-card *,
@@ -85,7 +85,7 @@ st.markdown(
     .alarm-box .small-muted,
     .ok-box .small-muted,
     .evidence-step .small-muted {
-        color: var(--vajra-muted) !important;
+        color: var(--steel-pilot-muted) !important;
         opacity: 0.78;
     }
 
@@ -98,7 +98,7 @@ st.markdown(
         min-height: 225px;
     }
     .stand-title {
-        color: var(--vajra-text) !important;
+        color: var(--steel-pilot-text) !important;
         font-weight: 800;
         font-size: 1.02rem;
         margin-bottom: 0.3rem;
@@ -116,14 +116,14 @@ st.markdown(
         border-left: 8px solid #ef4444 !important;
         padding: 12px;
         border-radius: 12px;
-        background: linear-gradient(0deg, var(--vajra-soft-red), var(--vajra-soft-red)), var(--vajra-card-bg) !important;
+        background: linear-gradient(0deg, var(--steel-pilot-soft-red), var(--steel-pilot-soft-red)), var(--steel-pilot-card-bg) !important;
     }
     .ok-box {
         border-color: rgba(34, 197, 94, 0.60) !important;
         border-left: 8px solid #22c55e !important;
         padding: 12px;
         border-radius: 12px;
-        background: linear-gradient(0deg, var(--vajra-soft-green), var(--vajra-soft-green)), var(--vajra-card-bg) !important;
+        background: linear-gradient(0deg, var(--steel-pilot-soft-green), var(--steel-pilot-soft-green)), var(--steel-pilot-card-bg) !important;
     }
 
     /* Decision evidence and rule cards */
@@ -132,7 +132,7 @@ st.markdown(
         padding: 10px 14px;
         margin-bottom: 10px;
         border-radius: 10px;
-        background: linear-gradient(0deg, var(--vajra-soft-blue), var(--vajra-soft-blue)), var(--vajra-card-bg) !important;
+        background: linear-gradient(0deg, var(--steel-pilot-soft-blue), var(--steel-pilot-soft-blue)), var(--steel-pilot-card-bg) !important;
     }
     .rule-triggered {border-left: 6px solid #ef4444 !important;}
     .rule-muted {
@@ -142,7 +142,7 @@ st.markdown(
 
     /* Make generated HTML tables/code snippets inside expanders readable as well */
     .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown span {
-        color: var(--vajra-text);
+        color: var(--steel-pilot-text);
     }
     </style>
     """,
@@ -325,14 +325,14 @@ def fault_label_to_title(fault: str) -> str:
 
 # ----------------------------- sidebar -----------------------------
 with st.sidebar:
-    st.header("Vajra V2 Navigation")
+    st.header("Steel Pilot V2 Navigation")
     page = st.radio(
         "Page",
         [
             "Plant Command Center",
             "Alarm Investigation & RCA",
             "Live Telemetry Replay",
-            "Vajra Maintenance Copilot",
+            "Steel Pilot Maintenance Copilot",
             "Operations Logbook & Feedback",
             "Model Health & Evaluation",
         ],
@@ -371,7 +371,7 @@ with st.sidebar:
             st.rerun()
     else:
         st.info("None bound")
-    thread_id = st.text_input("LangGraph Thread ID", value="vajra-v2-demo")
+    thread_id = st.text_input("LangGraph Thread ID", value="steel-pilot-v2-demo")
 
 
 # ----------------------------- pages -----------------------------
@@ -433,7 +433,7 @@ if page == "Plant Command Center":
             st.success(f"Saved {ev['log_id']}")
         if b3.button("Run quick RCA"):
             bind_alarm(row_idx, alarm_id)
-            with st.spinner("Running Vajra RCA..."):
+            with st.spinner("Running Steel Pilot RCA..."):
                 st.session_state.last_agent_result = answer_maintenance_query("Diagnose the selected priority alarm and recommend the next action.", thread_id=thread_id, row_index=row_idx, answer_mode="concise")
             st.success("RCA complete. Open Alarm Investigation or Copilot for details.")
 
@@ -554,8 +554,8 @@ elif page == "Live Telemetry Replay":
         raw = ml_service.telemetry_window(row_index=int(row_idx), stand=int(stand_sel), window=int(window))
         st.dataframe(raw.tail(50), use_container_width=True, hide_index=True)
 
-elif page == "Vajra Maintenance Copilot":
-    st.subheader("Vajra Maintenance Copilot")
+elif page == "Steel Pilot Maintenance Copilot":
+    st.subheader("Steel Pilot Maintenance Copilot")
     render_active_context()
     st.caption("Use concise mode for exact operational answers and detailed mode for RCA/report-style responses. Out-of-domain queries are handled by a guardrail.")
     st.session_state.answer_mode = st.radio("Answer Mode", ["Concise", "Detailed"], horizontal=True, index=0 if st.session_state.answer_mode == "Concise" else 1)
@@ -575,13 +575,13 @@ elif page == "Vajra Maintenance Copilot":
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
-    user_query = st.chat_input("Ask Vajra about alarms, telemetry, RCA, SOPs, drift, priority, or feedback...")
+    user_query = st.chat_input("Ask Steel Pilot about alarms, telemetry, RCA, SOPs, drift, priority, or feedback...")
     if user_query:
         st.session_state.messages.append({"role": "user", "content": user_query})
         with st.chat_message("user"):
             st.markdown(user_query)
         with st.chat_message("assistant"):
-            with st.spinner("Running Vajra agents..."):
+            with st.spinner("Running Steel Pilot agents..."):
                 result = answer_maintenance_query(user_query, thread_id=thread_id, row_index=selected_row, answer_mode=st.session_state.answer_mode.lower())
                 st.session_state.last_agent_result = result
                 answer = result.get("final_answer", "No answer generated.")

@@ -74,7 +74,7 @@ def run_gold_tests(
     answer_func: Callable[..., dict[str, Any]],
     selected_ids: list[str] | None = None,
     max_tests: int | None = None,
-    thread_prefix: str = "vajra-eval",
+    thread_prefix: str = "steel-pilot-eval",
     row_index: int | None = None,
 ) -> pd.DataFrame:
     tests = GOLD_TESTS

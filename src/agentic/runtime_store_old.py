@@ -38,7 +38,7 @@ def _shorten(value: Any, max_len: int = 180) -> str:
     return text if len(text) <= max_len else text[: max_len - 1] + "…"
 
 
-class VajraRuntimeStore:
+class SteelPilotRuntimeStore:
     
 
     def __init__(self, db_path: Path | None = None):
@@ -142,7 +142,7 @@ class VajraRuntimeStore:
             "anomaly_probability": event.get("anomaly_probability"),
             "rul_band": event.get("rul_band") or event.get("predicted_rul_band"),
             "status": event.get("status") or "open",
-            "recommended_action": event.get("recommended_action") or event.get("action") or "Review Vajra recommendation.",
+            "recommended_action": event.get("recommended_action") or event.get("action") or "Review Steel Pilot recommendation.",
             "query": event.get("query"),
             "final_answer": event.get("final_answer"),
             "decision_trace_json": _json_dumps(decision_trace),
@@ -351,4 +351,4 @@ class VajraRuntimeStore:
         return df
 
 
-runtime_store = VajraRuntimeStore()
+runtime_store = SteelPilotRuntimeStore()
